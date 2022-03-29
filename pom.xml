@@ -915,7 +915,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>${maven-javadoc-plugin.version}</version>
         <configuration>
-          <additionalparam>-notimestamp</additionalparam>
+          <!-- <additionalparam>-notimestamp</additionalparam> -->
           <!-- Prevent missing javadoc comments from being marked as errors -->
           <doclint>none</doclint>
           <subpackages>org.apache.bookkeeper.client:org.apache.bookkeeper.client.api:org.apache.bookkeeper.common.annotation:org.apache.bookkeeper.conf:org.apache.bookkeeper.feature:org.apache.bookkeeper.stats</subpackages>
