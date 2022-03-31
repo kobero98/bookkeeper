@@ -4,6 +4,8 @@
 .settings/
 .recommenders/
 
+aol.properties
+
 # Intellij
 .idea/
 *.iml
