@@ -75,7 +75,7 @@
           <target>${javac.target}</target>
           <compilerArgs>
             <compilerArg>-Xlint:unchecked</compilerArg>
-            <!-- https://issues.apache.org/jira/browse/MCOMPILER-205 -->
+            <!-- https://issues.apache.org/jira/browse/MCOMPILER-205-->
             <compilerArg>-Xpkginfo:always</compilerArg>
           </compilerArgs>
           <showDeprecation>false</showDeprecation>
@@ -115,4 +115,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>

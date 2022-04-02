@@ -30,7 +30,7 @@
   <properties>
     <groovy.version>2.5.8</groovy.version>
   </properties>
-
+<!--
   <modules>
     <module>shaded</module>
     <module>docker-images</module>
@@ -54,4 +54,5 @@
       </plugin>
     </plugins>
   </build>
+  -->
 </project>
