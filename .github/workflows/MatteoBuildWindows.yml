@@ -13,6 +13,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+
+      - name: Set up GCC
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: latest
+          platform: x64
+
       - name: Build with Maven Install
         run: mvn --batch-mode --update-snapshots install
       - name: Compile with Maven
