@@ -9,11 +9,9 @@ import org.apache.bookkeeper.client.utils.TestStatsProvider;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.util.DiskChecker;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
@@ -189,8 +187,6 @@ public static Collection<Object[]> data() {
             }
         }
     }
-
-
     @Test
     public void test1(){
         try {
