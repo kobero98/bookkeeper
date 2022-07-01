@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,11 +43,14 @@ public class InterleavedLedgerStoragePitTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {ParamOption.EMPTY, ConfigOption.MOCK},
+                {ParamOption.NULL, ConfigOption.MOCK2},
+                {ParamOption.EMPTY, ConfigOption.MOCK2},
+                {ParamOption.VALID, ConfigOption.MOCK2},
+                {ParamOption.INVALID, ConfigOption.MOCK2},
         });
     }
     public enum ConfigOption{
-        EMPTY,PRESENT,MOCK
+        EMPTY,PRESENT,MOCK,MOCK2
     }
     public enum ParamOption{
         NULL,EMPTY,VALID,INVALID
@@ -78,17 +83,27 @@ public class InterleavedLedgerStoragePitTest {
                     setUp2();
                     storage.entryLogger=mock(EntryLogger.class);
                     Mockito.doThrow(EntryLogger.EntryLookupException.class).when(storage.entryLogger).checkEntry(anyLong(),anyLong(),anyLong());
-                    sizeResult=20;
-                    exception=false;
+                    sizeResult=0;
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+                break;
+            case MOCK2:
+                try {
+                    setUp2();
+                    storage.entryLogger=mock(EntryLogger.class);
+                Mockito.doThrow(Bookie.NoLedgerException.class).when(storage.entryLogger).checkEntry(anyLong(),anyLong(),anyLong());
+                sizeResult=2;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                 }
+                break;
         }
 
         switch (option){
             case NULL:
                 this.rateLimiter=null;
-                if(setup== ConfigOption.PRESENT || setup== ConfigOption.MOCK) exception=true;
+                if(setup== ConfigOption.PRESENT || setup== ConfigOption.MOCK || setup==ConfigOption.MOCK2) exception=true;
                 else {
                     exception = false;
                 }
@@ -203,7 +218,7 @@ public class InterleavedLedgerStoragePitTest {
     public void test1(){
         try {
             List<LedgerStorage.DetectedInconsistency> listInconsistency=storage.localConsistencyCheck(this.rateLimiter);
-            Assert.assertEquals(listInconsistency.size(),this.sizeResult);
+            Assert.assertEquals(listInconsistency.size(),sizeResult);
             Assert.assertFalse(this.exception);
         } catch (Exception e) {
             Assert.assertTrue(this.exception);
