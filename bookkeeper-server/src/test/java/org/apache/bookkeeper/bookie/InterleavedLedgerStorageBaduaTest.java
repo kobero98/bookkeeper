@@ -1,6 +1,5 @@
 package org.apache.bookkeeper.bookie;
 
-import com.fasterxml.jackson.databind.util.ArrayIterator;
 import com.google.common.util.concurrent.RateLimiter;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -9,7 +8,6 @@ import org.apache.bookkeeper.client.utils.TestStatsProvider;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.util.DiskChecker;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -23,9 +21,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.apache.bookkeeper.bookie.BookKeeperServerStats.BOOKIE_SCOPE;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
 
 @RunWith(Parameterized.class)
-public class InterLeavedLedgerStorageUpgradeTest {
+public class InterleavedLedgerStorageBaduaTest {
     private Optional<RateLimiter> rateLimiter;
     private boolean exception ;
     private int sizeResult;
@@ -40,69 +40,71 @@ public class InterLeavedLedgerStorageUpgradeTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {ParamOption.NULL,ConfigOption.EMPTY},
-                {ParamOption.EMPTY,ConfigOption.EMPTY},
-                {ParamOption.VALID,ConfigOption.EMPTY},
-
-                {ParamOption.NULL,ConfigOption.PRESENT},
-                {ParamOption.EMPTY,ConfigOption.PRESENT},
-                {ParamOption.VALID,ConfigOption.PRESENT},
-
+                {ParamOption.EMPTY, ConfigOption.MOCK},
+                {ParamOption.NULL, ConfigOption.MOCK},
+                {ParamOption.VALID, ConfigOption.MOCK},
+                {ParamOption.INVALID, ConfigOption.MOCK}
         });
     }
     public enum ConfigOption{
-        EMPTY,PRESENT
+        EMPTY,PRESENT,MOCK
     }
     public enum ParamOption{
         NULL,EMPTY,VALID,INVALID
     }
 
-    public InterLeavedLedgerStorageUpgradeTest(ParamOption option,ConfigOption setup){
+    public InterleavedLedgerStorageBaduaTest(ParamOption option, ConfigOption setup){
         configure(option,setup);
     }
 
     public void configure(ParamOption option,ConfigOption setup){
         exception=false;
+        sizeResult=0;
         switch (setup){
-           case EMPTY:
-               try {
-                   setUp1();
-               } catch (IOException e) {
-                   throw new RuntimeException(e);
-               }
-               break;
-           case PRESENT:
-               try {
-                   setUp2();
-               } catch (IOException e) {
-                   throw new RuntimeException(e);
-               }
-               break;
-       }
+            case EMPTY:
+                try {
+                    setUp1();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case PRESENT:
+                try {
+                    setUp2();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case MOCK:
+                try {
+                    setUp2();
+                    storage.entryLogger=mock(EntryLogger.class);
+                    Mockito.doThrow(EntryLogger.EntryLookupException.class).when(storage.entryLogger).checkEntry(anyLong(),anyLong(),anyLong());
+                    sizeResult=20;
+                    exception=false;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+        }
 
         switch (option){
             case NULL:
                 this.rateLimiter=null;
-                if(setup==ConfigOption.PRESENT) exception=true;
+                if(setup== ConfigOption.PRESENT || setup== ConfigOption.MOCK) exception=true;
                 else {
                     exception = false;
-                    sizeResult=0;
                 }
-
                 break;
             case EMPTY:
                 this.rateLimiter=Optional.empty();
                 exception=false;
-                this.sizeResult=0;
                 break;
             case INVALID:
                 this.rateLimiter= Optional.of(RateLimiter.create(150));
                 exception=false;
-                this.sizeResult=0;
                 break;
             case VALID:
                 this.rateLimiter= Optional.of(RateLimiter.create(1));
-                this.sizeResult=0;
                 break;
         }
     }
@@ -210,7 +212,5 @@ public class InterLeavedLedgerStorageUpgradeTest {
         } catch (Exception e) {
             Assert.assertTrue(this.exception);
         }
-
-
     }
 }

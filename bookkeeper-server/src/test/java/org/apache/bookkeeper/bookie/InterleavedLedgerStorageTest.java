@@ -32,67 +32,9 @@ public class InterleavedLedgerStorageTest {
     ServerConfiguration conf = TestBKConfiguration.newServerConfiguration();
     LedgerDirsManager ledgerDirsManager;
     InterleavedLedgerStorage storage;
-    final long numWrites = 10;
+    final long numWrites = 2;
     final long entriesPerWrite = 2;
     final long numOfLedgers = 2;
-/*
-    public class pageMy implements LedgerCache.PageEntries{
-
-        @Override
-        public LedgerEntryPage getLEP(){
-
-            LedgerEntryPage app= mock(LedgerEntryPage.class);
-            Mockito.when(app.getVersion()).thenReturn(1);
-            try {
-                Mockito.doAnswer(invocation -> { ArrayList<Integer> s=new ArrayList<Integer>();
-                                                 s.add(1);
-                                                 s.add(2);
-                                                 return s;
-                }).when(app).getEntries(any(LedgerEntryPage.EntryVisitor.class));
-                //Mockito.doCallRealMethod().when(app).getEntries(any(LedgerEntryPage.EntryVisitor.class));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                doNothing().when(app).close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-
-            LedgerEntryPage app=new LedgerEntryPage(10,1);
-            return app;
-        }
-
-        @Override
-        public long getFirstEntry() {
-            return 0;
-        }
-
-        @Override
-        public long getLastEntry() {
-            return 0;
-        }
-    }
-
-    public class PageEntriesIterableImplMy implements LedgerCache.PageEntriesIterable {
-
-        @Override
-        public Iterator<LedgerCache.PageEntries> iterator() {
-            LedgerCache.PageEntries page[]=new LedgerCache.PageEntries[3];
-            page[0]=new pageMy();
-            page[1]=new pageMy();
-            page[2]=new pageMy();
-            Iterator <LedgerCache.PageEntries> s=new ArrayIterator<>(page);
-            return s;
-        }
-
-        @Override
-        public void close() throws Exception {
-            //no-op
-        }
-    }
-    */
 @Parameterized.Parameters
 public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
