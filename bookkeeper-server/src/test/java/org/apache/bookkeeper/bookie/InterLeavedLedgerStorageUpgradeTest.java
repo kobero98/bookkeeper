@@ -1,6 +1,5 @@
 package org.apache.bookkeeper.bookie;
 
-import com.fasterxml.jackson.databind.util.ArrayIterator;
 import com.google.common.util.concurrent.RateLimiter;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -9,11 +8,9 @@ import org.apache.bookkeeper.client.utils.TestStatsProvider;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.util.DiskChecker;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.apache.bookkeeper.bookie.BookKeeperServerStats.BOOKIE_SCOPE;
+import static org.mockito.Mockito.mock;
 
 @RunWith(Parameterized.class)
 public class InterLeavedLedgerStorageUpgradeTest {
@@ -96,8 +94,8 @@ public class InterLeavedLedgerStorageUpgradeTest {
                 this.sizeResult=0;
                 break;
             case INVALID:
-                this.rateLimiter= Optional.of(RateLimiter.create(150));
-                exception=false;
+                this.rateLimiter= Optional.of(mock(RateLimiter.class));
+                exception=true;
                 this.sizeResult=0;
                 break;
             case VALID:
@@ -106,6 +104,7 @@ public class InterLeavedLedgerStorageUpgradeTest {
                 break;
         }
     }
+
     public void setUp2() throws IOException {
         this.storage=new InterleavedLedgerStorage();
         CheckpointSource checkpointSource = new CheckpointSource() {

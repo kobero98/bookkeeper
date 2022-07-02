@@ -8,6 +8,7 @@ import org.apache.bookkeeper.client.utils.TestBKConfiguration;
 import org.apache.bookkeeper.client.utils.TestStatsProvider;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.util.DiskChecker;
+import org.apache.bookkeeper.util.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,12 +16,10 @@ import org.junit.runners.Parameterized;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.apache.bookkeeper.bookie.BookKeeperServerStats.BOOKIE_SCOPE;
+import static org.mockito.Mockito.mock;
 
 @RunWith(Parameterized.class)
 public class InterleavedLedgerStorageTest {
@@ -44,7 +43,7 @@ public static Collection<Object[]> data() {
     });
 }
     public enum ParamOption{
-        NULL,EMPTY,VALID
+        NULL,EMPTY,VALID,INVALID,
     }
 
     public InterleavedLedgerStorageTest(ParamOption option){
