@@ -28,7 +28,7 @@ public class BookieImplTest {
     private String resultExpected;
 
     public enum ParamConfServer{
-        NULL,INVALID,ABSTRACT,EMPTY,VALID
+        NULL,INVALID,ABSTRACT,EMPTY,
     }
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -36,7 +36,6 @@ public class BookieImplTest {
                 {ParamConfServer.NULL},
                 {ParamConfServer.EMPTY},
                 {ParamConfServer.ABSTRACT},
-                {ParamConfServer.VALID},
              });
     }
     private void configuration(ParamConfServer conf){
@@ -67,20 +66,6 @@ public class BookieImplTest {
                 } catch (UnknownHostException e) {
                     throw new RuntimeException(e);
                 }
-                break;
-            case VALID:
-                try {
-                    this.resultExpected="127.0.0.1";
-                    File journalDir = createTempDir("journal");
-                    File ledgerDir = createTempDir("ledger");
-                    this.configuration = TestBKConfiguration.newServerConfiguration();
-                    this.configuration.setJournalDirName(journalDir.getPath())
-                        .setLedgerDirNames(new String[] { ledgerDir.getPath() })
-                        .setMetadataServiceUri(null);
-                    this.exception=false;
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                 }
                 break;
             case INVALID:
                 break;

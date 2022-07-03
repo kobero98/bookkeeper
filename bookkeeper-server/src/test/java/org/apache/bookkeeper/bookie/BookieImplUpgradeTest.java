@@ -32,12 +32,10 @@ public class BookieImplUpgradeTest {
     }
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
+        return Arrays.asList(new Object[][]{
                 {ParamConfServer.NULL},
                 {ParamConfServer.EMPTY},
                 {ParamConfServer.ABSTRACT},
-                {ParamConfServer.VALID},
-                {ParamConfServer.MOCK}
         });
     }
     private void configuration(ParamConfServer conf){
@@ -69,24 +67,10 @@ public class BookieImplUpgradeTest {
                     throw new RuntimeException(e);
                 }
                 break;
-            case VALID:
-                try {
-                    this.resultExpected="127.0.0.1";
-                    File journalDir = createTempDir("journal");
-                    File ledgerDir = createTempDir("ledger");
-                    this.configuration = TestBKConfiguration.newServerConfiguration();
-                    this.configuration.setJournalDirName(journalDir.getPath())
-                            .setLedgerDirNames(new String[] { ledgerDir.getPath() })
-                            .setMetadataServiceUri(null);
-                    this.exception=false;
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
             case INVALID:
                 break;
             case MOCK:
-
+                this.exception=true;
                 break;
 
         }
