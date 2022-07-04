@@ -40,10 +40,10 @@ public class InterleavedLedgerStorageBaduaTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-               // {ParamOption.EMPTY, ConfigOption.MOCK},
-               // {ParamOption.NULL, ConfigOption.MOCK},
-               // {ParamOption.VALID, ConfigOption.MOCK},
-               // {ParamOption.INVALID, ConfigOption.MOCK}
+                {ParamOption.EMPTY, ConfigOption.MOCK},
+                {ParamOption.NULL, ConfigOption.MOCK},
+                {ParamOption.VALID, ConfigOption.MOCK},
+                {ParamOption.INVALID, ConfigOption.MOCK}
         });
     }
     public enum ConfigOption{

@@ -43,10 +43,10 @@ public class InterleavedLedgerStoragePitTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-              //  {ParamOption.NULL, ConfigOption.MOCK2},
-              //  {ParamOption.EMPTY, ConfigOption.MOCK2},
-              //  {ParamOption.VALID, ConfigOption.MOCK2}
-              //  {ParamOption.INVALID, ConfigOption.MOCK2},
+                {ParamOption.NULL, ConfigOption.MOCK2},
+                {ParamOption.EMPTY, ConfigOption.MOCK2},
+                {ParamOption.VALID, ConfigOption.MOCK2},
+                {ParamOption.INVALID, ConfigOption.MOCK2},
         });
     }
     public enum ConfigOption{

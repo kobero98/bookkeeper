@@ -38,13 +38,13 @@ public class InterLeavedLedgerStorageUpgradeTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-               // {ParamOption.NULL,ConfigOption.EMPTY},
-               // {ParamOption.EMPTY,ConfigOption.EMPTY},
-               // {ParamOption.VALID,ConfigOption.EMPTY},
+                {ParamOption.NULL,ConfigOption.EMPTY},
+                {ParamOption.EMPTY,ConfigOption.EMPTY},
+                {ParamOption.VALID,ConfigOption.EMPTY},
 
-                //{ParamOption.NULL,ConfigOption.PRESENT},
-               // {ParamOption.EMPTY,ConfigOption.PRESENT},
-               // {ParamOption.VALID,ConfigOption.PRESENT},
+                {ParamOption.NULL,ConfigOption.PRESENT},
+                {ParamOption.EMPTY,ConfigOption.PRESENT},
+                {ParamOption.VALID,ConfigOption.PRESENT},
 
         });
     }
