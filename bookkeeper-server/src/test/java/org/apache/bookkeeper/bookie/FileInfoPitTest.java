@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -26,13 +27,13 @@ public class FileInfoPitTest {
     }
 
     enum ParamSize {
-        MAX
+        ZERO
     }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-          //      {ParamFile.RENAMEFAIL, ParamSize.MAX},
+                {ParamFile.RENAMEFAIL, ParamSize.ZERO},
 
         });
     }
@@ -48,29 +49,19 @@ public class FileInfoPitTest {
     private File newFile;
     private Long size;
 
-    private class FileMatteo extends File{
-
-        public FileMatteo(String pathname) {
-            super(pathname);
-        }
-        boolean isInvalid(){
-            return true;
-        }
-    }
     public void configure(ParamFile filetype, ParamSize sizeType) throws IOException {
         switch (filetype){
             case RENAMEFAIL:
-                File filee=createTempFile("FileTestFileInfo");
-                this.fileInfo= new FileInfo(filee, "".getBytes(), 0);
-                File f= createTempFile("FileNewTestFIleInfo");
-                this.newFile = new FileMatteo(f.getPath());
-                this.exception=true;
+                File app=createTempFile("FileInfoTest");
+                this.fileInfo=new FileInfo(app,"".getBytes(),0);
+                this.newFile=createTempFile("newFileInfoTest");
+                this.exception=false;
                 break;
         }
         switch (sizeType)
         {
-            case MAX:
-                this.size=Long.MAX_VALUE;
+            case ZERO:
+                this.size= Long.valueOf(0);
                 break;
         }
     }
@@ -78,9 +69,9 @@ public class FileInfoPitTest {
     public void test(){
         try{
             fileInfo.moveToNewLocation(this.newFile,this.size);
-            Assert.assertFalse(this.exception);
+            Assert.assertFalse("mi aspettavo true",this.exception);
         } catch (IOException e) {
-            Assert.assertTrue(this.exception);
+            Assert.assertTrue("mi aspettavo false",this.exception);
         }
 
     }
