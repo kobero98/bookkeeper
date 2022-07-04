@@ -441,6 +441,7 @@
                 <param>org.apache.bookkeeper.bookie.FileInfoTest</param>
                 <param>org.apache.bookkeeper.bookie.FileInfoUpgradeTest</param>
                 <param>org.apache.bookkeeper.bookie.FileInfoBaduaTest</param>
+                <param>org.apache.bookkeeper.bookie.FileInfoPitTest</param>
               </targetTests>
               <avoidCallsTo>
                 <avoidCallsTo>org.slf4j</avoidCallsTo>
