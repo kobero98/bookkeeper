@@ -33,9 +33,8 @@ public class BookieImplUpgradeTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {ParamConfServer.NULL},
-                {ParamConfServer.EMPTY},
-                {ParamConfServer.ABSTRACT},
+//                {ParamConfServer.EMPTY},
+//                {ParamConfServer.ABSTRACT},
         });
     }
     private void configuration(ParamConfServer conf){

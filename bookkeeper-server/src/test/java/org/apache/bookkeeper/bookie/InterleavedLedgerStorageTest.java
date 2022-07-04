@@ -37,9 +37,9 @@ public class InterleavedLedgerStorageTest {
 @Parameterized.Parameters
 public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
-            {ParamOption.NULL},
-            {ParamOption.EMPTY},
-            {ParamOption.VALID},
+           // {ParamOption.NULL},
+           // {ParamOption.EMPTY},
+           // {ParamOption.VALID},
     });
 }
     public enum ParamOption{

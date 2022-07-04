@@ -430,13 +430,17 @@
             <configuration>
               <targetClasses>
                 <param>org.apache.bookkeeper.bookie.InterleavedLedgerStorage</param>
-
+                <param>org.apache.bookkeeper.bookie.FileInfo</param>
               </targetClasses>
               <targetTests>
                <param>org.apache.bookkeeper.bookie.InterleavedLedgerStorageTest</param>
                 <param>org.apache.bookkeeper.bookie.InterleavedLedgerStoragePitTest</param>
                 <param>org.apache.bookkeeper.bookie.InterleavedLedgerStorageBaduaTest</param>
                 <param>org.apache.bookkeeper.bookie.InterLeavedLedgerStorageUpgradeTest</param>
+
+                <param>org.apache.bookkeeper.bookie.FileInfoTest</param>
+                <param>org.apache.bookkeeper.bookie.FileInfoUpgradeTest</param>
+                <param>org.apache.bookkeeper.bookie.FileInfoBaduaTest</param>
               </targetTests>
               <avoidCallsTo>
                 <avoidCallsTo>org.slf4j</avoidCallsTo>
