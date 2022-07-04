@@ -32,7 +32,7 @@ public class FileInfoPitTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {ParamFile.RENAMEFAIL, ParamSize.MAX},
+          //      {ParamFile.RENAMEFAIL, ParamSize.MAX},
 
         });
     }
@@ -48,12 +48,22 @@ public class FileInfoPitTest {
     private File newFile;
     private Long size;
 
+    private class FileMatteo extends File{
+
+        public FileMatteo(String pathname) {
+            super(pathname);
+        }
+        boolean isInvalid(){
+            return true;
+        }
+    }
     public void configure(ParamFile filetype, ParamSize sizeType) throws IOException {
         switch (filetype){
             case RENAMEFAIL:
                 File filee=createTempFile("FileTestFileInfo");
                 this.fileInfo= new FileInfo(filee, "".getBytes(), 0);
-                this.newFile = createTempFile("ciao2");
+                File f= createTempFile("FileNewTestFIleInfo");
+                this.newFile = new FileMatteo(f.getPath());
                 this.exception=true;
                 break;
         }
