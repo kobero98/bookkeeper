@@ -32,7 +32,7 @@ public class FileInfoUpgradeTest {
     }
 
     enum ParamSize {
-        NEG, ZERO, MAX, MINOR
+         MAX
     }
 
     @Parameterized.Parameters

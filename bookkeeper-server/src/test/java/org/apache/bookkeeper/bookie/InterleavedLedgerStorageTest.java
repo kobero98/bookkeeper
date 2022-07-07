@@ -37,9 +37,10 @@ public class InterleavedLedgerStorageTest {
 @Parameterized.Parameters
 public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
-            {ParamOption.NULL},
+           {ParamOption.NULL},
             {ParamOption.EMPTY},
             {ParamOption.VALID},
+
     });
 }
     public enum ParamOption{
@@ -71,6 +72,12 @@ public static Collection<Object[]> data() {
                 this.rateLimiter= Optional.of(RateLimiter.create(1));
                 this.sizeResult=0;
                 break;
+            case INVALID:
+                RateLimiter s=mock(RateLimiter.class);
+                this.rateLimiter=Optional.of(s);
+                this.sizeResult=0;
+                break;
+
         }
     }
 

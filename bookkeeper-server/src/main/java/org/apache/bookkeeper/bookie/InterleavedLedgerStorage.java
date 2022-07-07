@@ -598,7 +598,6 @@ public class InterleavedLedgerStorage implements CompactableLedgerStorage, Entry
                         long start = MathUtils.nowInNano();
                         lep.getEntries((entry, offset) -> {
                             rateLimiter.ifPresent(RateLimiter::acquire);
-
                             try {
                                 entryLogger.checkEntry(ledger, entry, offset);
                                 checkedEntries.increment();
@@ -626,8 +625,7 @@ public class InterleavedLedgerStorage implements CompactableLedgerStorage, Entry
                             pageScanStats.registerSuccessfulEvent(
                                 MathUtils.elapsedNanos(start), TimeUnit.NANOSECONDS);
                         } else {
-                            pageScanStats.registerFailedEvent(
-                                MathUtils.elapsedNanos(start), TimeUnit.NANOSECONDS);
+                            pageScanStats.registerFailedEvent(MathUtils.elapsedNanos(start), TimeUnit.NANOSECONDS);
                         }
                     } while (retry.booleanValue());
                     checkedPages++;

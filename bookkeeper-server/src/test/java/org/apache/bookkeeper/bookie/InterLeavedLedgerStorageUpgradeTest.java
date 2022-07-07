@@ -38,6 +38,7 @@ public class InterLeavedLedgerStorageUpgradeTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
+
                 {ParamOption.NULL,ConfigOption.EMPTY},
                 {ParamOption.EMPTY,ConfigOption.EMPTY},
                 {ParamOption.VALID,ConfigOption.EMPTY},
@@ -45,6 +46,9 @@ public class InterLeavedLedgerStorageUpgradeTest {
                 {ParamOption.NULL,ConfigOption.PRESENT},
                 {ParamOption.EMPTY,ConfigOption.PRESENT},
                 {ParamOption.VALID,ConfigOption.PRESENT},
+
+
+
 
         });
     }
@@ -198,7 +202,6 @@ public class InterLeavedLedgerStorageUpgradeTest {
         storage.setCheckpointer(checkpointer);
         storage.setCheckpointSource(checkpointSource);
     }
-
 
     @Test
     public void test1(){

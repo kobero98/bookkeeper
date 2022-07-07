@@ -30,8 +30,8 @@ public class FileInfoTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 {ParamFile.NULL,ParamSize.MINOR},
-                {ParamFile.CHIUSO,ParamSize.MINOR},
-                {ParamFile.VUOTO,ParamSize.NEG},
+               // {ParamFile.CHIUSO,ParamSize.MINOR},
+               // {ParamFile.VUOTO,ParamSize.NEG},
                 {ParamFile.VUOTO,ParamSize.ZERO},
                 {ParamFile.VUOTO,ParamSize.MINOR},
                 {ParamFile.VUOTO,ParamSize.MAX},
@@ -60,14 +60,14 @@ public class FileInfoTest {
             case CHIUSO:
                 this.fileNew=createTempFile("testFileInfoNewFile");
                 this.fileNew.delete();
-                this.exception=false;
+                this.exception=true;
                 break;
         }
         switch (sizeType) {
             case NEG:
                 this.size = -1;
                 this.sizeExpected=0;
-                this.exception = false;
+                this.exception = true;
                 break;
             case ZERO:
                 this.size = 1024;

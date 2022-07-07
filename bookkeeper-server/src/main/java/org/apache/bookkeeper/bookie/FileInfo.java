@@ -105,7 +105,6 @@ class FileInfo extends Watchable<LastAddConfirmedUpdateNotification> {
 
     public FileInfo(File lf, byte[] masterKey, int fileInfoVersionToWrite) throws IOException {
         super(WATCHER_RECYCLER);
-
         this.lf = lf;
         this.masterKey = masterKey;
         mode = "rw";

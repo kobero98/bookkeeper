@@ -40,17 +40,18 @@ public class InterleavedLedgerStorageBaduaTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
+
                 {ParamOption.EMPTY, ConfigOption.MOCK},
                 {ParamOption.NULL, ConfigOption.MOCK},
                 {ParamOption.VALID, ConfigOption.MOCK},
-                {ParamOption.INVALID, ConfigOption.MOCK}
+
         });
     }
     public enum ConfigOption{
         EMPTY,PRESENT,MOCK
     }
     public enum ParamOption{
-        NULL,EMPTY,VALID,INVALID
+        NULL,EMPTY,VALID,
     }
 
     public InterleavedLedgerStorageBaduaTest(ParamOption option, ConfigOption setup){
@@ -97,10 +98,6 @@ public class InterleavedLedgerStorageBaduaTest {
                 break;
             case EMPTY:
                 this.rateLimiter=Optional.empty();
-                exception=false;
-                break;
-            case INVALID:
-                this.rateLimiter= Optional.of(RateLimiter.create(150));
                 exception=false;
                 break;
             case VALID:
